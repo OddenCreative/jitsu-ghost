@@ -1,0 +1,1234 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+//@import "modules/bourbon/bourbon";
+
+@import "modules/mixins";
+/* Sass variables like colours, font sizes, basic styles. */
+
+@import "modules/normalize";
+/* Browser cross compatibility normalisation*/
+
+@import "modules/fontawesome";
+/* Browser cross compatibility fontawesome*/
+
+@import "modules/inlineDisqussions";
+/* Browser cross compatibility inlinedisqussions*/
+
+@mixin breakpoint($point) {
+  @if $point == large {
+    @media (max-width: 1600px) { @content; }
+  }
+  @else if $point == less_large {
+    @media (max-width: 1260px) and (min-width: 1000px) { @content; }
+  }
+  @else if $point == medium {
+    @media (max-width: 999px) and (min-width: 600px) { @content; }
+  }
+  @else if $point == medium_small {
+    @media (max-width: 850px) { @content; }
+  }
+  @else if $point == small {
+    @media (max-width: 599px) { @content; }
+  }
+  @else if $point == small_landscape {
+    @media only screen and (max-width: 599px) and (orientation: landscape) { @content; }
+  }
+  @else if $point == small_portrait {
+    @media only screen and (max-width: 599px) and (orientation: portrait) { @content; }
+  }
+}
+
+$proxima-nova: proxima-nova,"Open Sans","Gill Sans MT","Gill Sans",Corbel,Sans-Serif;
+
+// colors
+$blue: #146EFF;
+$dark-blue: #0A3780;
+$dark-green: #4B7550;
+$green: lighten($dark-green, 20%);
+$dark-orange: #802F19;
+$orange: darken(#FF5E33, 8%);
+$dark-orchid: #572D80;
+$orchid: lighten($dark-orchid, 15%);
+$dark-red: #701F35;
+$red: lighten($dark-red, 20%);
+$grey: #BFBBB1;
+$dark-grey: #383734;
+$darker-grey:darken($dark-grey, 10%);
+$light-grey: #FFF9EC;
+
+// fonts
+$font-light: $light-grey;
+$font-dark: $dark-grey;
+$font-size: 21px;
+$line-height: 1.570em;
+$logo-y: 1.2em;
+$letter-space: .038em;
+$logo-space: -.034em;
+
+$small: 543px;
+$medium: 794px;
+$fence-sm: $small $medium;
+
+a {
+  text-decoration: none;
+  color: $light-grey;
+  :hover {
+    font-weight: 300;
+  }
+}
+.ocm_home {
+  @include icon-before($icon-home, 0, 1.6em);
+}
+.ocm_blog {
+  @include icon-before($icon-book, 0, 1.6em);
+}
+.ocm_service {
+  @include icon-before($icon-cogs, 0, 1.6em);
+}
+.ocm_portfolio {
+  @include icon-before($icon-th-large, 0, 1.6em);
+}
+.ocm_contact, .ocm_phone {
+  @include icon-before($icon-phone, 0, 1.6em);
+}
+.ocm_menu {
+  @include icon-before($icon-reorder, 0, 1.6em);
+}
+.ocm_phone {
+  @include icon-before($icon-phone, 0, 1.6em);
+}
+.ocm_email {
+  @include icon-before($icon-envelope, 0, 1.6em);
+}
+.ocm_twitter {
+  @include icon-before($icon-twitter-sign, 0, 1.6em);
+}
+.ocm_fb {
+  @include icon-before($icon-facebook-sign, 0, 1.6em);
+}
+.ocm_linkedin {
+  @include icon-before($icon-linkedin-sign, 0, 1.6em);
+}
+.ocm_gplus {
+  @include icon-before($icon-google-plus-sign, 0, 1.6em);
+}
+.ocm_github {
+  @include icon-before($icon-github-alt, 0, 1.6em);
+}
+.ocm_development {
+  @include icon-before($icon-code, 0, 1.6em);
+}
+.ocm_design {
+  @include icon-before($icon-pencil, 0, 1.6em);
+}
+.ocm_photo {
+  @include icon-before($icon-camera, 0, 1.6em);
+}
+.reader {
+  position: absolute;
+  left: -9999px;
+
+}
+
+/* logo definition */
+%logo {
+  @include background(url("/content/images/ocm.svg") no-repeat);
+  -ms-background-position-x: -1.75em;
+//  background-position-x: -1.75em;
+//  background: url("/content/images/ocm.svg") no-repeat left center;
+  font-weight: 100;
+  line-height: .8;
+  padding-left: 2.5em;
+  width: 3.4em;
+//  letter-spacing: $logo-space;
+  span {
+    font-weight: 400;
+  }
+}
+
+// photo-feed definition start
+%photo-feed {
+  #page {
+    .post {
+      img {
+        width: 100%;
+      }
+      p.rss-title {
+        display: none;
+      }
+      a.rss-item {
+        letter-spacing: $letter-space;
+        text-transform: lowercase;
+        display: block;
+      }
+      .rss-item {
+        display: inline-block;
+        p {
+          margin: 0em;
+          margin-bottom: 0;
+          padding-left: 0;
+          font-size: .8em;
+        }
+        p:last-child {
+//          font-size: .8em;
+//          height: 2.5em;
+//          margin: 0;
+//          padding: .5em;
+//          margin-top: -.5em;
+//          background-color: lighten($dark-grey, 10%);
+//          overflow: hidden;
+//          text-overflow: ellipsis;
+        }
+        p:last-child:hover {
+          visibility: visible;
+        }
+      }
+      li.rss-item {
+        padding: 1em 0;
+      }
+      a.rss-item {
+        border-top: 1px solid $light-grey;
+        border-bottom: 1px solid $light-grey;
+        padding: .5em 0;
+
+      }
+      .rss-item:first-child {
+        margin-top: 0;
+      }
+      .rss-item:last-child {
+        margin-bottom: 0;
+      }
+      ul {
+        margin-left: 0;
+        padding-left: 0;
+        li {
+          @include icon-before($icon-camera !important, 1em, 1em);
+          ul {
+            margin-left: 0;
+            li {
+              @include icon-before($icon-camera !important, 1em, 1em);
+            }
+          }
+        }
+        li:before {
+          float: left;
+          margin: .6em 0;
+        }
+      }
+    }
+  }
+}
+// photo-feed definition end
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  letter-spacing: .1em;
+}
+h1 {
+  font-size: 1.6em;
+}
+h2 {
+  font-size: 1.3em;
+}
+h3 {
+  font-size: 1.2em;
+}
+h4 {
+  font-size: 1.1em;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+body {
+  font-family: $proxima-nova;
+  font-size: $font-size;
+  line-height: $line-height;
+  letter-spacing: $letter-space;
+  background: $dark-grey;
+  color: $font-light;
+  @include clearfix;
+}
+#menu_button {
+  width: 100px;
+  padding-top: 1.5em;
+  left: 0;
+  text-align: center;
+  position: absolute;
+}
+
+header {
+  z-index: 2;
+  background-color: $dark-grey;
+  h1 {
+//    margin: .85em 100px;
+    margin-left: 1em;
+    position: absolute;
+    font-weight: 300;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    left: 0;
+    right: 8.3em;
+    text-shadow: 0 2px 3px $darker-grey;
+    @include breakpoint(small) {
+      font-size: 1.2em;
+      right: 6em;
+    }
+  }
+  #logo {
+    @extend %logo;
+    @include transform(translateY(.85em));
+    @include breakpoint(small) {
+      font-size: 1em;
+    }
+    font-size: 1.9em;
+    margin-right: 1em;
+    margin-left: 1em;
+    float: right;
+  }
+  height: 7em;
+  @include breakpoint(small) {
+    height: 4em;
+    margin-left: 0;
+  }
+  @include breakpoint(small_landscape) {
+    height: 4em;
+    margin-left: 100px;
+  }
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  margin-left: 100px;
+}
+
+.smallheader header {
+  box-shadow: 0 5px 10px $darker-grey;
+}
+blockquote {
+  @include icon-before($icon-quote-left, 2em, 1em);
+  text-indent: -1em;
+  margin-left: 2em;
+//  @include icon-after($icon-quote-right, 1em, 1em);
+}
+blockquote:before {
+  float: left;
+}
+
+.home-template, .home-template.smallheader {
+  background-color: $blue;
+
+  header {
+    height: 15em;
+    @include breakpoint(small) {
+      height: 6em;
+    }
+    @include breakpoint(medium) {
+      height: 12em;
+    }
+    position: inherit;
+    background-color: $blue;
+    #logo {
+      @extend %logo;
+      @include transform(translateY(1.2em));
+      font-size: 3.9em;
+      @include breakpoint(small) {
+        @include transform(translateY(1.8em));
+        font-size: 1.7em;
+      }
+      @include breakpoint(medium) {
+        @include transform(translateY(2.3em));
+        font-size: 2.4em;
+      }
+      margin-right: auto;
+      margin-left: auto;
+      float: none;
+    }
+  }
+  #nav {
+    background-color: $dark-blue;
+    ul {
+      li {
+        border-bottom-color: $blue;
+      }
+    }
+  }
+  #page {
+    margin-top: 1em;
+    min-height: auto;
+    height: auto;
+    @include breakpoint(small) {
+      @include transform(translateY(.6em));
+//      font-size: 1.7em;
+    }
+  }
+  footer {
+    background-color: $dark-blue;
+  }
+}
+.menu {
+  header, #page {
+    margin-left: 100px;
+  }
+  #menu_button {
+//    left: 100px;
+  }
+  #nav {
+    left: 0;
+  }
+  #page {
+    margin-left: 200px;
+  }
+}
+
+#nav {
+  width: 100px;
+  height: 100%;
+  background-color: $darker-grey;
+  float: left;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  overflow-y: auto;
+  i {
+    text-shadow: 0 2px 3px $dark-grey;
+  }
+  @include breakpoint(small) {
+    width: 100%;
+    height: 100px;
+    top: auto !important;
+    bottom: 0 !important;
+  }
+  @include breakpoint(small_landscape) {
+    width: 100px;
+    height: 100%;
+    top: 0 !important;
+    bottom: auto !important;
+  }
+  a span {
+    display: block;
+  }
+  ul {
+    padding-bottom: 1em;
+    :last-child {
+      border-bottom: none;
+    }
+    li {
+      list-style-type: none;
+      width: 100px;
+      padding-top: .7em;
+      padding-bottom: .65em;
+      text-align: center;
+      border-bottom-color: $dark-grey;
+      border-bottom-width: 1px;
+      border-bottom-style: solid;
+      font-weight: 100;
+      letter-spacing: $letter-space;
+      line-height: 1.35em;
+      @include breakpoint(small) {
+        width: 20%;
+//        height: 100px;
+        float: left;
+        border-bottom: none;
+        font-size: .75em !important;
+      }
+      @include breakpoint(small_landscape) {
+        float: none;
+        width: 100%;
+      }
+      i {
+        @include breakpoint(small) {
+          font-size: 1.5em !important;
+        }
+      }
+    }
+  }
+}
+.newer-posts {
+  padding-right: 2em;
+}
+.older-posts {
+  padding-left: 2em;
+}
+#page {
+  @include clearfix;
+  margin-left: 100px;
+  padding-left:100px;
+  padding-right: 100px;
+  margin-bottom: 2em;
+  margin-top: 7.25em;
+  @include breakpoint(small) {
+    margin-top: 5em;
+    margin-left: 0;
+    margin-bottom: 120px;
+  }
+  @include breakpoint(small_landscape) {
+    margin-left: 100px;
+  }
+  @include breakpoint(medium_small) {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+  z-index: 5;
+  .content {
+    @include clearfix;
+    i {
+      text-shadow: 0 2px 3px $darker-grey;
+    }
+    p {
+      margin-top: .5em;
+      margin-bottom: .5em;
+    }
+    article:nth-child(odd) {
+      @include breakpoint(less_large) {
+        margin-left: 0 !important;
+        margin-right: 1.97% !important;
+      }
+    }
+    article:nth-child(even) {
+      @include breakpoint(less_large) {
+        margin-left: 1.97% !important;
+        margin-right: 0 !important;
+      }
+    }
+    :first-child {
+      margin-left: 0;
+    }
+    :last-child {
+      margin-right: 0;
+    }
+    section {
+      @include clearfix;
+      @include breakpoint(small) {
+        margin: 0;
+      }
+      @include breakpoint(medium) {
+        p:nth-child(odd) {
+          margin-right: 2%;
+          margin-left: 0;
+        }
+        p:nth-child(even) {
+          margin-right: 0;
+          margin-left: 2%;
+        }
+      }
+      article {
+        @include clearfix;
+        font-weight: 100;
+        width: 30.7%;
+        height: 29em;
+        @include breakpoint(small) {
+          width: 100%;
+          height: auto;
+          margin-left: 0;
+          margin-right: 0;
+        }
+        @include breakpoint(medium) {
+          width: 100%;
+          height: auto;
+        }
+        @include breakpoint(less_large) {
+          width: 46%;
+        }
+        h2 {
+          height: 2.5em;
+        }
+        h4 {
+          border-top: 1px solid white;
+          border-bottom: 1px solid white;
+          padding: .5em 0;
+          margin: 0 0 1.25em;
+          font-size: .9em;
+          text-transform: uppercase;
+          @include breakpoint(small) {
+            font-size: .8em !important;
+          }
+          span {
+            float: right;
+          }
+          i:before {
+            padding: 0 .5em;
+          }
+        }
+        .tags {
+          border-top: 1px solid white;
+          padding-top: .5em;
+          font-style: italic;
+          font-weight: 100;
+          font-size: .85em;
+        }
+        float: left;
+        margin: 0 1.97%;
+      }
+    }
+    .pagination {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  .post {
+    @include clearfix;
+//    height: 500px;
+    font-weight: 100;
+    letter-spacing: $letter-space;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:nth-child(3) {
+      margin-right: 0;
+    }
+    &:nth-child(4) {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    span.inset-right,
+    span.inset-left {
+      width: 50%;
+      margin: 0 0 0 .75em;
+      background-color: lighten($dark-grey, 15%);
+      padding: .5em;
+      font-size: 80%;
+      font-weight: 100;
+      border-radius: .5em;
+      box-shadow: 0 1px 2px $darker-grey inset;
+//      letter-spacing: .05em;
+    }
+    span.inset-right {
+      float: right;
+    }
+    span.inset-left {
+      float: left;
+    }
+    span.inset-right .inset-right-title,
+    span.inset-left .inset-right-title {
+      //  font-size: 1.1em;
+      font-weight: 300;
+      margin-left: -1em;
+      display: block;
+      background-color: lighten($dark-grey, 40%);
+      padding: .1em .5em;
+      text-shadow: 0 2px 1px $darker-grey;
+      box-shadow: 0 2px 3px $darker-grey;
+    }
+  }
+}
+#disqus_thread {
+  width: 80%;
+  margin: 1em auto;
+  .positioned {
+    z-index: 3;
+  }
+}
+.post-template {
+  header {
+    background-color: $dark-grey;
+  }
+  #page {
+    article {
+      @include clearfix;
+    }
+    .post {
+      width: 100%;
+      z-index: 2;
+      .post-content {
+        width: 60%;
+        float: left;
+        p {
+          line-height: 1.4;
+          margin: 1em 0;
+        }
+        @include breakpoint(small) {
+          width: 100%;
+          float: none;
+        }
+        p, ul {
+          max-width: 30em;
+        }
+        h4 {
+          font-weight: 100;
+          margin: 1.5em 0;
+          padding: .5em 0;
+          border-top: 1px solid white;
+          border-bottom: 1px solid white;
+        }
+      }
+      img {
+        width: 100%;
+      }
+      ul, ul ul, ul ol, ul ul ul {
+        list-style-type: none;
+      }
+      ul {
+        margin-left: 1em;
+        margin-top: .5em;
+        margin-bottom: .5em;
+        li {
+          @include icon-before($icon-lightbulb, 1em, 1em);
+          ul {
+            margin-left: 1em;
+            margin-top: .5em;
+            margin-bottom: .5em;
+            li {
+              @include icon-before($icon-lightbulb, 1em, 1em);
+            }
+          }
+        }
+      }
+      .share {
+        ul {
+          li {
+            @include icon-before($icon-lightbulb, 0, 1em);
+            text-shadow: 0 2px 3px $darker-grey;
+          }
+        }
+      }
+    }
+  }
+}
+.tag-photography.post-template {
+  @extend %photo-feed;
+  #page {
+    .post {
+      .post-content {
+        width: 60%;
+        max-width: 100%;
+        float: left;
+        @include breakpoint(small) {
+          width: 100%;
+          height: auto;
+        }
+        p, ul {
+          width: 100%;
+          max-width: 800px;
+//          margin: 0 auto;
+          background-color: $orchid !important;
+          li {
+            width: 100%;
+            z-index: 0 !important;
+          }
+        }
+      }
+    }
+    .post-footer {
+//      background-color: transparent;
+//      box-shadow: none;
+    }
+  }
+}
+
+#page .post .author img {
+  margin-top: .25em;
+  margin-right: 0;
+  margin-bottom: 1em;
+  width: 30%;
+  box-shadow: 0 2px 5px $darker-grey;
+  margin-left: 1em;
+  float: right;
+  border-radius: .5em;
+}
+#page .post .author ul {
+  margin: 0;
+}
+.author, .share, .terms {
+//  letter-spacing: .08em;
+  font-weight: 100;
+  ul {
+    display: block;
+    li:before {
+      text-indent: -9999px;
+      ul {
+        li:before {
+          text-indent: -9999px;
+        }
+      }
+    }
+  }
+}
+.post-template #page .post .author {
+  li:before {
+    content: normal;
+  }
+}
+.video-container {
+  margin: 1em 0;
+  iframe {
+    width: 100%;
+    box-shadow: 0 2px 3px $darker-grey;
+  }
+}
+.author, .terms {
+  h4{
+    text-shadow: 0 3px 3px $darker-grey;
+    background-color: lighten($dark-grey, 40%);
+    margin-left: -1.25em !important;
+    padding: .17em .75em;
+    box-shadow: 0 2px 3px $darker-grey;
+    width: 65%;
+  }
+}
+.terms {
+  img {
+    width: auto !important;
+  }
+}
+.share {
+  h4{
+    text-shadow: 0 3px 3px $darker-grey;
+    font-size: 92%;
+  }
+}
+span.post-meta {
+  font-size: .8em;
+  font-weight: 100;
+  time {
+    padding-right: .5em;
+//    display: block;
+  }
+}
+footer {
+  width: 101%;
+  bottom: 0;
+  left: -3px;
+  right: -3px;
+  background: $darker-grey;
+  color: $font-light;
+  position: fixed;
+  z-index: 10;
+  .copy {
+    letter-spacing: .11em;
+    font-size: .7em;
+    float: right;
+    margin-right: 2em;
+    margin-left: 1em;
+    font-weight: 100;
+    p {
+      margin: .25em 0;
+    }
+    span {
+      font-weight: 400;
+    }
+  }
+}
+h4 {
+  font-weight: 300;
+  margin: .5em 0;
+}
+footer.post-footer {
+  z-index: 1;
+  width: 30%;
+  float: right;
+  line-height: 1.521em;
+  @include breakpoint(small) {
+    width: 93%;
+    left: 0;
+    right: 0;
+    float: none;
+  }
+  background-color: lighten($dark-grey, 15%);
+  position: relative;
+  margin: 1.75em 0;
+  font-size: 80%;
+  padding: 1em;
+  display: inline-block;
+  box-shadow: 0 2px 3px $darker-grey;
+  .author li {
+    display: block;
+  }
+}
+.share {
+  :first-child {
+    margin-left: 0;
+  }
+  :last-child {
+    margin-right: 0;
+  }
+//  margin-top: 2em;
+  li {
+    text-align: center;
+    display: inline-block;
+    margin: 0 .25em;
+  }
+}
+
+.mobile {
+  header {
+    #logo {
+      float: right;
+      margin-right: 2em;
+      margin-left: 0;
+    }
+  }
+}
+
+/* Blog special settings */
+.blog {
+  background-color: $dark-grey;
+  header {
+    background-color: $dark-grey;
+  }
+  #nav {
+    background-color: $darker-grey;
+    ul {
+      li {
+        border-bottom-color: $dark-grey;
+      }
+    }
+  }
+  footer {
+    background-color: $darker-grey;
+  }
+}
+
+/* Service special settings */
+.page-template-services {
+  background-color: $green;
+  header {
+    background-color: $green;
+  }
+  #nav {
+    background-color: $dark-green;
+    ul {
+      li {
+        border-bottom-color: $green;
+      }
+    }
+  }
+  h2 {
+    i:before {
+      font-size: 1em;
+      padding-right: .9em;
+    }
+  }
+  #page {
+    .content {
+      section.services {
+        :nth-child(odd) {
+          @include breakpoint(less_large) {
+            margin: 0 0 1em !important;
+          }
+        }
+        :nth-child(even) {
+          @include breakpoint(less_large) {
+            margin: 0 0 1em !important;
+          }
+        }
+        article {
+          background-color: darken($green, 4%);
+          box-shadow: 0 2px 3px $darker-grey;
+          height: 29em;
+          @include breakpoint(less_large) {
+//            width: 30.7% !important;
+//            margin: 0 1.97% !important;
+//            height: auto;
+            width: 100%;
+            height: auto;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 1em;
+            padding-bottom: .5em;
+          }
+          @include breakpoint(medium) {
+            width: 100%;
+            height: auto;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 1em;
+            padding-bottom: .5em;
+          }
+          @include breakpoint(small) {
+            height: auto;
+            margin-bottom: 1em;
+            padding-bottom: .5em;
+          }
+          div{
+            padding: 0 .75em;
+          }
+        }
+      }
+    }
+  }
+  footer {
+    background-color: $dark-green;
+  }
+}
+.tag-service.smallheader header {
+  background-color: $green;
+}
+
+/* Portfolio specific styling */
+.tag-portfolio {
+  background-color: $orchid;
+  color: $light-grey;
+  header {
+    background-color: $orchid;
+  }
+  #nav {
+    background-color: $dark-orchid;
+    color: $light-grey;
+    ul {
+      li {
+        border-bottom-color: $orchid;
+      }
+    }
+  }
+  #page {
+    .content{
+      article {
+        span.image {
+          height: 175px;
+          overflow: hidden;
+          width: 100%;
+          border-radius: 1em 4em;
+          display: block;
+          box-shadow: 4px 5px 10px $dark-grey;
+          margin: 0 0 1em;
+          @include breakpoint(less_large) {
+            height: 150px;
+          }
+          @include breakpoint(medium) {
+            height: 300px;
+          }
+          img {
+            width: 125%;
+            @include breakpoint(less_large) {
+              width: 145%;
+            }
+          }
+        }
+      }
+    }
+  }
+  h1 {
+    i:before {
+      font-size: 1em;
+      padding-right: .9em;
+    }
+  }
+  footer {
+    background-color: $dark-orchid;
+  }
+}
+.tag-portfolio.smallheader header {
+  background-color: $orchid;
+}
+.design img {
+  margin: -23% -14% !important;
+}
+.tag-photography.tag-portfolio.tag-website.tag-print {
+  #page {
+    section {
+      :first-child {
+        @include breakpoint(less_large) {
+          margin-left: 0 !important;
+        }
+      }
+      :last-child {
+        @include breakpoint(less_large) {
+          margin-right: 0 !important;
+        }
+      }
+      article {
+        @include breakpoint(less_large) {
+          width: 30.7% !important;
+          margin: 0 1.97% !important;
+          height: auto;
+        }
+        @include breakpoint(medium) {
+          width: 100%;
+          margin: 0 0 1em;
+          height: auto;
+        }
+        @include breakpoint(small) {
+          width: 100%;
+          margin: 0 0 1em;
+          height: auto;
+        }
+
+      }
+    }
+  }
+}
+/* contact specific styling */
+.tag-contact {
+  a {
+    color: $light-grey;
+  }
+  a:hover {
+    font-weight: 300;
+  }
+  background-color: $red;
+  color: $light-grey;
+  #nav {
+    background-color: $dark-red;
+    color: $light-grey;
+    ul {
+      li {
+        border-bottom-color: $red;
+      }
+    }
+  }
+  header {
+    background-color: $red;
+  }
+  #page {
+    .content {
+      ul {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .map {
+        width: 60%;
+        margin-right: 1.98%;
+        @include breakpoint(less_large) {
+          width: 48%;
+        }
+        @include breakpoint(medium_small) {
+          width: 100%;
+          margin: 0;
+        }
+        iframe {
+          width: 100%;
+          height: 17em;
+          box-shadow: 0 2px 3px $darker-grey;
+          @include breakpoint(medium_small) {
+            height: 10em;
+          }
+          border: 0;
+        }
+        float: left;
+      }
+      .info {
+        font-weight: 300;
+        width: 35%;
+        margin-left: 1.98%;
+        @include breakpoint(less_large) {
+          width: 48%;
+        }
+        @include breakpoint(medium_small) {
+          width: 100%;
+          margin: 0;
+        }
+        height: 450px;
+        @include breakpoint(medium_small) {
+          height: auto;
+          margin-bottom: 2em;
+        }
+        float: left;
+        .address li {
+          display: block;
+          margin: 0 !important;
+          letter-spacing: $letter-space;
+          line-height: 1.35;
+        }
+        #contact {
+          margin: 1em 0;
+          li {
+            display: block;
+            margin: 1em 0;
+            i {
+              width: 3.5em;
+              display: inline-block;
+            }
+            .reader {
+              left: auto;
+            }
+          }
+        }
+        #social {
+          :first-child {
+            margin-left: 0 !important;
+          }
+          :last-child {
+            margin-right: 0 !important;
+          }
+          margin-top: 2em;
+          li {
+            text-align: center;
+            display: inline-block;
+            margin: 0 1em;
+            @include breakpoint(medium) {
+              margin: 0 .5em;
+            }
+            @include breakpoint(small) {
+              margin: 0 1em;
+            }
+            @include breakpoint(less_large) {
+              margin: 0 .5em !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  footer {
+    background-color: $dark-red;
+  }
+}
+.tag-contact.smallheader header {
+  background-color: $red;
+}
+
+
+/* Tag line */
+.tagline {
+  margin: 1em auto;
+  width: 24em;
+  @include breakpoint(small) {
+    width: 8em;
+  }
+  @include breakpoint(medium) {
+    width: 100%;
+  }
+  text-align: center;
+  letter-spacing: .2em;
+  font-weight: 100;
+  font-size: 1.25em;
+  li {
+    display: inline;
+    float: left;
+    text-decoration: none;
+    text-align: center;
+    @include breakpoint(small) {
+      width: 8em;
+    }
+    @include breakpoint(medium) {
+      width: 100%;
+    }
+    a {
+      color: $light-grey;
+      text-decoration: none;
+    }
+  }
+  li:last-child:after {
+    content: "";
+    padding-left: 0;
+    padding-right: 0;
+//    letter-spacing: 0;
+  }
+  li:after {
+    content: " +";
+    padding-left: .5em;
+    padding-right: .5em;
+    @include breakpoint(small) {
+      content: "+";
+      padding-right: .5em;
+      display: block;
+    }
+    @include breakpoint(medium) {
+      content: "+";
+      padding-right: .5em;
+      display: block;
+    }
+  }
+}
