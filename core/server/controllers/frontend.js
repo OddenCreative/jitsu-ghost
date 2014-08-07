@@ -97,15 +97,15 @@ frontendControllers = {
             };
 
         // No negative pages, or page 1
-        if (isNaN(pageParam) || pageParam < 1 || (pageParam === 1 && req.route.path === '/page/:page/')) {
-            return res.redirect(config().paths.subdir + '/');
+        if (isNaN(pageParam) || pageParam < 1 || (pageParam === 1 && req.route.path === '/blog/:page/')) {
+            return res.redirect(config().paths.subdir + '/blog/');
         }
 
         return getPostPage(options).then(function (page) {
 
             // If page is greater than number of pages we have, redirect to last page
             if (pageParam > page.pages) {
-                return res.redirect(page.pages === 1 ? config().paths.subdir + '/' : (config().paths.subdir + '/page/' + page.pages + '/'));
+                return res.redirect(page.pages === 1 ? config().paths.subdir + '/blog/' : (config().paths.subdir + '/blog/' + page.pages + '/'));
             }
 
             // Render the page of posts
