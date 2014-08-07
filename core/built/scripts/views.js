@@ -689,8 +689,7 @@
         events: {
             "click .settings-menu a": "handleMenuClick",
             "click #startupload": "handleUploadClick",
-            "click .js-delete": "handleDeleteClick",
-            "click #sendtestmail": "handleSendTestMailClick"
+            "click .js-delete": "handleDeleteClick"
         },
 
         initialize: function () {
@@ -838,36 +837,7 @@
                     }
                 }
             }));
-        },
-        
-        handleSendTestMailClick: function (ev) {
-            ev.preventDefault();
-        
-            $.ajax({
-                url: Ghost.paths.apiRoot + '/mail/test/',
-                type: 'POST',
-                headers: {
-                    'X-CSRF-Token': $("meta[name='csrf-param']").attr('content')
-                },
-                success: function onSuccess(response) {
-                    Ghost.notifications.addItem({
-                        type: 'success',
-                        message: ['Check your email for the test message: ', response.message].join(''),
-                        status: 'passive'
-                    });
-                },
-                error: function onError(response) {
-                    var responseText = JSON.parse(response.responseText),
-                        message = responseText && responseText.error ? responseText.error : 'unknown';
-                    Ghost.notifications.addItem({
-                        type: 'error',
-                        message: ['A problem was encountered while sending the test email: ', message].join(''),
-                        status: 'passive'
-                    });
-
-                }
-            });
-        },
+        }
     });
 }());
 
@@ -1943,7 +1913,7 @@
             // and then update the placeholder value.
             if (title) {
                 $.ajax({
-                    url: Ghost.paths.apiRoot + '/posts/slug/' + encodeURIComponent(title) + '/',
+                    url: Ghost.paths.apiRoot + '/posts/getSlug/' + encodeURIComponent(title) + '/',
                     success: function (result) {
                         $postSettingSlugEl.attr('placeholder', result);
                     }
@@ -2447,8 +2417,14 @@
                         } else {
                             data[key] = this.$('.js-upload-target').attr('src');
                         }
-                        self.model.set(data);
-                        self.saveSettings();
+
+                        self.model.save(data, {
+                            success: self.saveSuccess,
+                            error: self.saveError
+                        }).then(function () {
+                            self.saveSettings();
+                        });
+
                         return true;
                     },
                     buttonClass: "button-save right",
@@ -2519,8 +2495,12 @@
                     } else {
                         data[key] = this.$('.js-upload-target').attr('src');
                     }
-                    self.model.set(data);
-                    self.saveUser(data);
+                    self.model.save(data, {
+                        success: self.saveSuccess,
+                        error: self.saveError
+                    }).then(function () {
+                        self.saveUser();
+                    });
                     return true;
                 },
                 buttonClass: "button-save right",

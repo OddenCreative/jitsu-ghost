@@ -114,14 +114,15 @@ adminControllers = {
         },
         // frontend route for downloading a file
         exportContent: function (req, res) {
-            api.db.exportContent.call({user: req.session.user}).then(function (exportData) {
+            /*jslint unparam:true*/
+            api.db.exportContent().then(function (exportData) {
                 // send a file to the client
                 res.set('Content-Disposition', 'attachment; filename="GhostData.json"');
                 res.json(exportData);
             }).otherwise(function (err) {
                 var notification = {
                     type: 'error',
-                    message: 'Your export file could not be generated. Error: ' + err.message,
+                    message: 'Your export file could not be generated.',
                     status: 'persistent',
                     id: 'errorexport'
                 };
@@ -243,12 +244,12 @@ adminControllers = {
             email = req.body.email,
             password = req.body.password;
 
-        api.users.register({
+        api.users.add({
             name: name,
             email: email,
             password: password
         }).then(function (user) {
-            api.settings.edit.call({user: 1}, 'email', email).then(function () {
+            api.settings.edit('email', email).then(function () {
                 var message = {
                     to: email,
                     subject: 'Your New Ghost Blog',

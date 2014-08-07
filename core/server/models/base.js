@@ -47,16 +47,20 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
         validation.validateSchema(this.tableName, this.toJSON());
     },
 
-    creating: function (newObj, attr, options) {
+    creating: function () {
         if (!this.get('created_by')) {
-            this.set('created_by', options.user);
+            this.set('created_by', 1);
         }
     },
 
-    saving: function (newObj, attr, options) {
-        // Remove any properties which don't belong on the model
+    saving: function () {
+         // Remove any properties which don't belong on the model
         this.attributes = this.pick(this.permittedAttributes());
-        this.set('updated_by', options.user);
+
+        // sessions do not have 'updated_by' column
+        if (this.tableName !== 'sessions') {
+            this.set('updated_by', 1);
+        }
     },
 
     // Base prototype properties will go here
@@ -112,7 +116,7 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     /**
      * Naive find all
-     * @param {Object} options (optional)
+     * @param options (optional)
      */
     findAll:  function (options) {
         options = options || {};
@@ -125,8 +129,8 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     /**
      * Naive find one where args match
-     * @param {Object} args
-     * @param {Object} options (optional)
+     * @param args
+     * @param options (optional)
      */
     findOne: function (args, options) {
         options = options || {};
@@ -139,15 +143,13 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     /**
      * Naive edit
-     * @param {Object} editedObj
-     * @param {Object} options (optional)
+     * @param editedObj
+     * @param options (optional)
      */
     edit: function (editedObj, options) {
         options = options || {};
         return this.forge({id: editedObj.id}).fetch(options).then(function (foundObj) {
-            if (foundObj) {
-                return foundObj.save(editedObj, options);
-            }
+            return foundObj.save(editedObj, options);
         });
     },
 
@@ -157,8 +159,8 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     /**
      * Naive create
-     * @param {Object} newObj
-     * @param {Object} options (optional)
+     * @param newObj
+     * @param options (optional)
      */
     add: function (newObj, options) {
         options = options || {};
@@ -180,8 +182,8 @@ ghostBookshelf.Model = ghostBookshelf.Model.extend({
 
     /**
      * Naive destroy
-     * @param {Object} _identifier
-     * @param {Object} options (optional)
+     * @param _identifier
+     * @param options (optional)
      */
     destroy: function (_identifier, options) {
         options = options || {};

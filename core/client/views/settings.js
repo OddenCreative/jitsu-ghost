@@ -220,8 +220,14 @@
                         } else {
                             data[key] = this.$('.js-upload-target').attr('src');
                         }
-                        self.model.set(data);
-                        self.saveSettings();
+
+                        self.model.save(data, {
+                            success: self.saveSuccess,
+                            error: self.saveError
+                        }).then(function () {
+                            self.saveSettings();
+                        });
+
                         return true;
                     },
                     buttonClass: "button-save right",
@@ -292,8 +298,12 @@
                     } else {
                         data[key] = this.$('.js-upload-target').attr('src');
                     }
-                    self.model.set(data);
-                    self.saveUser(data);
+                    self.model.save(data, {
+                        success: self.saveSuccess,
+                        error: self.saveError
+                    }).then(function () {
+                        self.saveUser();
+                    });
                     return true;
                 },
                 buttonClass: "button-save right",

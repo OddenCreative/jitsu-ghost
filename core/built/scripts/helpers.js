@@ -799,6 +799,10 @@
         MarkdownEditor;
 
     MarkdownShortcuts = [
+        {'key': 'Ctrl+B', 'style': 'bold'},
+        {'key': 'Meta+B', 'style': 'bold'},
+        {'key': 'Ctrl+I', 'style': 'italic'},
+        {'key': 'Meta+I', 'style': 'italic'},
         {'key': 'Ctrl+Alt+U', 'style': 'strike'},
         {'key': 'Ctrl+Shift+K', 'style': 'code'},
         {'key': 'Meta+K', 'style': 'code'},
@@ -816,21 +820,12 @@
         {'key': 'Ctrl+Shift+U', 'style': 'lowercase'},
         {'key': 'Ctrl+Alt+Shift+U', 'style': 'titlecase'},
         {'key': 'Ctrl+Alt+W', 'style': 'selectword'},
-        {'key': 'Ctrl+L', 'style': 'list'}
+        {'key': 'Ctrl+L', 'style': 'list'},
+        {'key': 'Ctrl+Alt+C', 'style': 'copyHTML'},
+        {'key': 'Meta+Alt+C', 'style': 'copyHTML'},
+        {'key': 'Meta+Enter', 'style': 'newLine'},
+        {'key': 'Ctrl+Enter', 'style': 'newLine'}
     ];
-
-    if (navigator.userAgent.indexOf('Mac') !== -1) {
-        MarkdownShortcuts.push({'key': 'Meta+B', 'style': 'bold'});
-        MarkdownShortcuts.push({'key': 'Meta+I', 'style': 'italic'});
-        MarkdownShortcuts.push({'key': 'Meta+Alt+C', 'style': 'copyHTML'});
-        MarkdownShortcuts.push({'key': 'Meta+Enter', 'style': 'newLine'});
-    } else {
-        MarkdownShortcuts.push({'key': 'Ctrl+B', 'style': 'bold'});
-        MarkdownShortcuts.push({'key': 'Ctrl+I', 'style': 'italic'});
-        MarkdownShortcuts.push({'key': 'Ctrl+Alt+C', 'style': 'copyHTML'});
-        MarkdownShortcuts.push({'key': 'Ctrl+Enter', 'style': 'newLine'});
-
-    }
 
     MarkdownEditor = function () {
         var codemirror = CodeMirror.fromTextArea(document.getElementById('entry-markdown'), {
@@ -887,7 +882,6 @@
     Ghost.Editor = Ghost.Editor || {};
     Ghost.Editor.MarkdownEditor = MarkdownEditor;
 } ());
-
 // # Ghost Editor HTML Preview
 //
 // HTML Preview is the right pane in the split view editor.

@@ -9,6 +9,7 @@ var _           = require('lodash'),
 
     // Paths for views
     defaultErrorTemplatePath = path.resolve(config().paths.adminViews, 'user-error.hbs'),
+    userErrorTemplatePath    = path.resolve(config().paths.themePath, 'error.hbs'),
     userErrorTemplateExists   = false;
 
 // This is not useful but required for jshint
@@ -18,8 +19,9 @@ colors.setTheme({silly: 'rainbow'});
  * Basic error handling helpers
  */
 errors = {
-    updateActiveTheme: function (activeTheme) {
-        userErrorTemplateExists = config().paths.availableThemes[activeTheme].hasOwnProperty('error.hbs');
+    updateActiveTheme: function (activeTheme, hasErrorTemplate) {
+        userErrorTemplatePath = path.resolve(config().paths.themePath, activeTheme, 'error.hbs');
+        userErrorTemplateExists = hasErrorTemplate;
     },
 
     throwError: function (err) {
