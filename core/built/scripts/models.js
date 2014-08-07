@@ -34,7 +34,7 @@
     });
 }());
 
-/*global Ghost, _, Backbone */
+/*global Ghost, _, Backbone, JSON */
 (function () {
     'use strict';
 
@@ -47,6 +47,10 @@
         blacklist: ['published', 'draft'],
 
         parse: function (resp) {
+
+            if (resp.posts) {
+                resp = resp.posts[0];
+            }
             if (resp.status) {
                 resp.published = resp.status === 'published';
                 resp.draft = resp.status === 'draft';
@@ -75,6 +79,15 @@
                 return tag.id === tagToRemove.id || tag.name === tagToRemove.name;
             });
             this.set('tags', tags);
+        },
+        sync: function (method, model, options) {
+            //wrap post in {posts: [{...}]}
+            if (method === 'create' || method === 'update') {
+                options.data = JSON.stringify({posts: [this.attributes]});
+                options.contentType = 'application/json';
+            }
+
+            return Backbone.Model.prototype.sync.apply(this, arguments);
         }
     });
 
@@ -90,12 +103,12 @@
 
         parse: function (resp) {
             if (_.isArray(resp.posts)) {
-                this.limit = resp.limit;
-                this.currentPage = resp.page;
-                this.totalPages = resp.pages;
-                this.totalPosts = resp.total;
-                this.nextPage = resp.next;
-                this.prevPage = resp.prev;
+                this.limit = resp.meta.pagination.limit;
+                this.currentPage = resp.meta.pagination.page;
+                this.totalPages = resp.meta.pagination.pages;
+                this.totalPosts = resp.meta.pagination.total;
+                this.nextPage = resp.meta.pagination.next;
+                this.prevPage = resp.meta.pagination.prev;
                 return resp.posts;
             }
             return resp;
@@ -120,7 +133,11 @@
     'use strict';
 
     Ghost.Collections.Tags = Ghost.ProgressCollection.extend({
-        url: Ghost.paths.apiRoot + '/tags/'
+        url: Ghost.paths.apiRoot + '/tags/',
+
+        parse: function (resp) {
+            return resp.tags;
+        }
     });
 }());
 

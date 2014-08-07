@@ -38,13 +38,13 @@ if (!isProduction) {
     hbs.handlebars.logger.level = 0;
 }
 
-/**
- * [ description]
- * @todo ghost core helpers + a way for themes to register them
- * @param  {Object} context date object
- * @param  {*} options
- * @return {Object} A Moment time / date object
- */
+
+ // [ description]
+ //
+ // @param  {Object} context date object
+ // @param  {*} options
+ // @return {Object} A Moment time / date object
+
 coreHelpers.date = function (context, options) {
     if (!options && context.hasOwnProperty('hash')) {
         options = context;
@@ -103,10 +103,12 @@ coreHelpers.page_url = function (context, block) {
     }
 
     if (context > 1) {
-        url += '/page/' + context;
+        url += '/blog/' + context;
     }
 
-    url += '/';
+    if (url.indexOf('blog') === -1) {
+        url += '/blog/';
+    }
 
     return url;
 };
@@ -460,10 +462,11 @@ coreHelpers.ghost_head = function (options) {
 
 coreHelpers.ghost_foot = function (options) {
     /*jshint unused:false*/
-    var foot = [];
+    var jquery = isProduction ? 'jquery.min.js' : 'jquery.js',
+        foot = [];
 
     foot.push(scriptTemplate({
-        source: config().paths.subdir + '/public/jquery.js',
+        source: config().paths.subdir + '/public/' + jquery,
         version: coreHelpers.assetHash
     }));
 
@@ -518,10 +521,10 @@ coreHelpers.meta_description = function (options) {
 /**
  * Localised string helpers
  *
- * @param String key
- * @param String default translation
+ * @param {String} key
+ * @param {String} default translation
  * @param {Object} options
- * @return String A correctly internationalised string
+ * @return {String} A correctly internationalised string
  */
 coreHelpers.e = function (key, defaultString, options) {
     var output;
@@ -655,8 +658,8 @@ coreHelpers.pagination = function (options) {
         errors.logAndThrowError('All values must be defined for page, pages, limit and total');
         return;
     }
-    if ((!_.isUndefined(this.pagination.next) && !_.isNumber(this.pagination.next))
-            || (!_.isUndefined(this.pagination.prev) && !_.isNumber(this.pagination.prev))) {
+    if ((!_.isNull(this.pagination.next) && !_.isNumber(this.pagination.next))
+            || (!_.isNull(this.pagination.prev) && !_.isNumber(this.pagination.prev))) {
         errors.logAndThrowError('Invalid value, Next/Prev must be a number');
         return;
     }
