@@ -103,10 +103,12 @@ coreHelpers.page_url = function (context, block) {
     }
 
     if (context > 1) {
-        url += '/page/' + context;
+        url += '/blog/' + context;
     }
 
-    url += '/';
+    if (url.indexOf('blog') === -1) {
+        url += '/blog/';
+    }
 
     return url;
 };
