@@ -21,7 +21,8 @@ module.exports = function (server) {
     server.get('/tag/:slug/rss/:page/', frontend.rss);
     server.get('/tag/:slug/page/:page/', frontend.tag);
     server.get('/tag/:slug/', frontend.tag);
-    server.get('/page/:page/', frontend.homepage);
+//    server.get('/page/:page/', frontend.homepage);
+    server.get('/blog/:page/', frontend.blog);
     server.get('/blog/', frontend.blog);
     server.get('/', frontend.homepage);
     server.get('*', frontend.single);
