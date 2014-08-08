@@ -183,7 +183,7 @@ function init(server) {
         // see above
         res.setHeader('Strict-Transport-Security', 'max-age=8640000; includeSubDomains');
 
-        if (req.headers.host !== 'ocm.today' && process.env.NODE_ENV === 'production') {
+        if (req.headers.host !== 'ocm.today') {
             return res.redirect(301, 'http://ocm.today/');
         }
     });
