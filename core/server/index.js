@@ -178,16 +178,6 @@ function init(server) {
         server = express();
     }
 
-    // Added for domain redirects
-    server.use(function (req, res, next) {
-        // see above
-        res.setHeader('Strict-Transport-Security', 'max-age=8640000; includeSubDomains');
-
-        if (req.headers.host !== 'ocm.today') {
-            return res.redirect(301, 'http://ocm.today/');
-        }
-    });
-
     // Set up Polygot instance on the require module
     Polyglot.instance = new Polyglot();
 
